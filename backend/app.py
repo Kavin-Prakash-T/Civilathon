@@ -12,6 +12,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import jwt
+import os
 
 load_dotenv()
 
@@ -538,5 +539,6 @@ def get_my_reports():
     
     return jsonify({'reports': reports}), 200
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
