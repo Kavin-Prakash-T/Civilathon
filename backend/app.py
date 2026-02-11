@@ -23,7 +23,7 @@ CORS(
     resources={r"/api/*": {
         "origins": [
             "http://localhost:5173",          # local frontend
-            "https://civilathon.vercel.app/" # deployed frontend
+            "https://civilathon.vercel.app" # deployed frontend
         ]
     }},
     supports_credentials=True,
