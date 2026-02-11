@@ -12,12 +12,24 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
 from pymongo import MongoClient
 from dotenv import load_dotenv
 import jwt
-import os
+
 
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+
+CORS(
+    app,
+    resources={r"/api/*": {
+        "origins": [
+            "http://localhost:5173",          # local frontend
+            "https://civilathon.vercel.app/" # deployed frontend
+        ]
+    }},
+    supports_credentials=True,
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+)
 bcrypt = Bcrypt(app)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
 
@@ -539,6 +551,10 @@ def get_my_reports():
     
     return jsonify({'reports': reports}), 200
 
+'''if __name__ == '__main__':
+    app.run(debug=True, port=5000)'''
+
+#for deployment
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     app.run(host="0.0.0.0", port=port)
